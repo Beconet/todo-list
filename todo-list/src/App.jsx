@@ -9,27 +9,32 @@ function App() {
     setTodoList(e.target.value);
   }
   const addTask = () => {
-    setTodoArray([...todoArray,todoList]);
-    setTodoList('');
-    
+    if(todoList != ""){
+      setTodoArray([...todoArray,todoList]);
+      setTodoList('');
+    }
+  }
+  const removeTask = (taskToRemove) => {
+    const updatedTodoArray = todoArray.filter(task => task !== taskToRemove);
+    setTodoArray(updatedTodoArray);
   }
   console.log(todoList)
   console.log(todoArray);
   return (
       <>
       <div className='container'>
-        <div>
+        <div className='container_box'>
       <h1>To-Do List</h1>
       <div>
         <input type="text" placeholder='type here' onChange={handleInputValue} value={todoList}/>
-        <button onClick={addTask}>Add Task</button>
+        <button onClick={addTask}> Add Task</button>
       </div>
     
     <div>
       <ul>
         {todoArray.map((todo,index)=>{
          return(
-          <li key={index}>{todo}</li>
+          <li key={index}>{todo} <button  onClick={() => removeTask(todo)} value={todo} >remove</button></li>
          )
         })}
       </ul>
